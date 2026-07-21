@@ -1,84 +1,182 @@
-// 1. GERİ SAYIM MANTIĞI
-const sinavTarihi = new Date("2026-10-25T10:15:00").getTime();
-const kampBaslangici = new Date("2026-07-01T00:00:00").getTime(); // Motivasyon için kamp başlangıcı
+/* ============================================================
+   2026 KPSS Ortaöğretim Rehberi — Etkileşim Katmanı
+   ============================================================ */
 
-function geriSayimiGuncelle() {
-    const simdi = new Date().getTime();
-    const kalan = sinavTarihi - simdi;
+const EXAM_DATE = new Date('2026-10-25T10:15:00+03:00').getTime();
+const CAMP_START = new Date('2026-07-01T00:00:00+03:00').getTime();
 
-    if (kalan < 0) {
-        document.querySelector(".countdown-container").innerHTML = "<h2 style='color:#10b981;'>🎉 Sınav tamamlandı! Sonuçlar 19 Kasım'da açıklanıyor.</h2>";
-        clearInterval(timerInterval);
-        return;
-    }
+const SUBJECTS = [
+  { key: 'tur', label: '📖 Türkçe',          total: 30, group: 'GY' },
+  { key: 'mat', label: '🔢 Matematik',       total: 30, group: 'GY' },
+  { key: 'tar', label: '🏛️ Tarih',           total: 27, group: 'GK' },
+  { key: 'cog', label: '🗺️ Coğrafya',        total: 18, group: 'GK' },
+  { key: 'vat', label: '⚖️ Vatandaşlık',     total: 9,  group: 'GK' },
+  { key: 'gun', label: '📰 Güncel Bilgiler', total: 6,  group: 'GK' },
+];
 
-    const gun = Math.floor(kalan / (1000 * 60 * 60 * 24));
-    const saat = Math.floor((kalan % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const dakika = Math.floor((kalan % (1000 * 60 * 60)) / (1000 * 60));
-    const saniye = Math.floor((kalan % (1000 * 60)) / 1000);
+const $ = (id) => document.getElementById(id);
+const clamp = (v, min, max) => Math.min(Math.max(v, min), max);
 
-    document.getElementById("gun").innerText = gun;
-    document.getElementById("saat").innerText = String(saat).padStart(2, '0');
-    document.getElementById("dakika").innerText = String(dakika).padStart(2, '0');
-    document.getElementById("saniye").innerText = String(saniye).padStart(2, '0');
+/* ---------- 1. GERİ SAYIM ---------- */
+function tickCountdown() {
+  const diff = EXAM_DATE - Date.now();
+  if (diff <= 0) {
+    $('countdown').innerHTML = '<h2 style="color:var(--success)">🎉 Sınav tamamlandı! Sonuçlar 19 Kasım 2026\'da açıklanıyor.</h2>';
+    clearInterval(cdInterval);
+    return;
+  }
+  const g = Math.floor(diff / 86400000);
+  const s = Math.floor((diff % 86400000) / 3600000);
+  const d = Math.floor((diff % 3600000) / 60000);
+  const sn = Math.floor((diff % 60000) / 1000);
+  $('gun').textContent = g;
+  $('saat').textContent = String(s).padStart(2, '0');
+  $('dakika').textContent = String(d).padStart(2, '0');
+  $('saniye').textContent = String(sn).padStart(2, '0');
+}
+const cdInterval = setInterval(tickCountdown, 1000);
+tickCountdown();
+
+/* ---------- 2. ÇALIŞMA KAMPI İLERLEMESİ ---------- */
+(function updateProgress() {
+  const total = EXAM_DATE - CAMP_START;
+  const elapsed = clamp(Date.now() - CAMP_START, 0, total);
+  const pct = Math.floor((elapsed / total) * 100);
+  requestAnimationFrame(() => {
+    $('progressFill').style.width = pct + '%';
+    $('progressPercent').textContent = '%' + pct;
+  });
+})();
+
+/* ---------- 3. TEMA (KARANLIK / AYDINLIK) ---------- */
+const themeBtn = $('themeToggle');
+function applyTheme(dark) {
+  document.body.classList.toggle('dark', dark);
+  themeBtn.textContent = dark ? '☀️' : '🌙';
+  localStorage.setItem('kpss2026-theme', dark ? 'dark' : 'light');
+}
+const saved = localStorage.getItem('kpss2026-theme');
+applyTheme(saved ? saved === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches);
+themeBtn.addEventListener('click', () => applyTheme(!document.body.classList.contains('dark')));
+
+/* ---------- 4. NAVBAR, MOBİL MENÜ, İLERLEME ÇUBUĞU ---------- */
+const navbar = $('navbar'), navLinks = $('navLinks');
+$('hamburger').addEventListener('click', () => navLinks.classList.toggle('open'));
+navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('open')));
+
+const backTop = $('backTop');
+backTop.addEventListener('click', () => scrollTo({ top: 0, behavior: 'smooth' }));
+
+addEventListener('scroll', () => {
+  const y = scrollY;
+  navbar.classList.toggle('scrolled', y > 10);
+  backTop.classList.toggle('show', y > 600);
+  const max = document.documentElement.scrollHeight - innerHeight;
+  $('scrollProgress').style.width = (max > 0 ? (y / max) * 100 : 0) + '%';
+}, { passive: true });
+
+/* ---------- 5. SCROLL ANİMASYONLARI + SAYAÇLAR ---------- */
+function animateCounter(el) {
+  const target = parseFloat(el.dataset.count);
+  const decimals = parseInt(el.dataset.decimals || 0, 10);
+  const prefix = el.dataset.prefix || '';
+  const suffix = el.dataset.suffix || '';
+  const dur = 1600, start = performance.now();
+  (function frame(now) {
+    const p = clamp((now - start) / dur, 0, 1);
+    const eased = 1 - Math.pow(1 - p, 3);
+    el.textContent = prefix + (target * eased).toLocaleString('tr-TR',
+      { minimumFractionDigits: decimals, maximumFractionDigits: decimals }) + suffix;
+    if (p < 1) requestAnimationFrame(frame);
+  })(start);
 }
 
-const timerInterval = setInterval(geriSayimiGuncelle, 1000);
-geriSayimiGuncelle(); // Sayfa açılır açılmaz çalışsın
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (!e.isIntersecting) return;
+    e.target.classList.add('visible');
+    e.target.querySelectorAll('.stat-num[data-count]').forEach(n => {
+      if (!n.dataset.done) { n.dataset.done = 1; animateCounter(n); }
+    });
+    observer.unobserve(e.target);
+  });
+}, { threshold: 0.12 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-// 2. ÇALIŞMA KAMPI İLERLEME ÇUBUĞU
-function ilerlemeyiGuncelle() {
-    const simdi = new Date().getTime();
-    const toplamSure = sinavTarihi - kampBaslangici;
-    let gecenSure = simdi - kampBaslangici;
-    
-    if (gecenSure < 0) gecenSure = 0;
-    
-    let yuzde = Math.floor((gecenSure / toplamSure) * 100);
-    if (yuzde > 100) yuzde = 100;
+/* ---------- 6. DİNAMİK SELAMLAMA ---------- */
+(function greeting() {
+  const h = new Date().getHours();
+  let msg;
+  if (h >= 5 && h < 12)       msg = 'Günaydın! ☕ Erken kalkan yol alır — bugünü verimli değerlendir.';
+  else if (h >= 12 && h < 18) msg = 'İyi çalışmalar! 🎯 Küçük adımlar, büyük puanlar getirir.';
+  else if (h >= 18 && h < 23) msg = 'İyi akşamlar! 🌙 Gece sessizliği en iyi çalışma arkadaşıdır.';
+  else                        msg = 'Gece kuşu modu! 🦉 Kısa ve odaklı tekrarlar tam sana göre.';
+  $('greeting').textContent = msg;
+})();
 
-    document.getElementById("progress-fill").style.width = yuzde + "%";
-    document.getElementById("progress-percent").innerText = "%" + yuzde;
-}
-ilerlemeyiGuncelle();
-
-// 3. KARANLIK / AYDINLIK MOD (Ziyaretçinin seçimi tarayıcıda hatırlanır)
-const themeToggle = document.getElementById("theme-toggle");
-const kayitliTema = localStorage.getItem("kpss-tema");
-
-if (kayitliTema === "dark") {
-    document.body.classList.add("dark-theme");
-    themeToggle.innerText = "☀️";
-}
-
-themeToggle.addEventListener("click", () => {
-    document.body.classList.toggle("dark-theme");
-    const isDark = document.body.classList.contains("dark-theme");
-    themeToggle.innerText = isDark ? "☀️" : "🌙";
-    localStorage.setItem("kpss-tema", isDark ? "dark" : "light");
+/* ---------- 7. KONU SEKMELERİ ---------- */
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    $('panel-' + btn.dataset.tab).classList.add('active');
+  });
 });
 
-// 4. KAYDIRDIKÇA BELİREN ANİMASYONLAR (Intersection Observer)
-const gozlemlenecekler = document.querySelectorAll(".reveal");
+/* ---------- 8. SSS (AKORDEON) ---------- */
+document.querySelectorAll('.faq-q').forEach(q => {
+  q.addEventListener('click', () => {
+    const item = q.parentElement;
+    const answer = item.querySelector('.faq-a');
+    const open = item.classList.toggle('open');
+    answer.style.maxHeight = open ? answer.scrollHeight + 'px' : '0';
+  });
+});
 
-const gozlemci = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.classList.add("active");
-        }
-    });
-}, { threshold: 0.1 });
+/* ---------- 9. NET & PUAN HESAPLAYICI ---------- */
+const calcRows = $('calcRows');
+const inputs = {};
 
-gozlemlenecekler.forEach(el => gozlemci.observe(el));
+SUBJECTS.forEach(s => {
+  const row = document.createElement('div');
+  row.className = 'calc-row';
+  row.innerHTML = `
+    <div class="calc-subject">${s.label} <small>(${s.total} soru • ${s.group})</small></div>
+    <input type="number" min="0" max="${s.total}" value="0" data-key="${s.key}" data-type="d" aria-label="${s.label} doğru sayısı">
+    <input type="number" min="0" max="${s.total}" value="0" data-key="${s.key}" data-type="y" aria-label="${s.label} yanlış sayısı">
+    <div class="calc-net" id="net-${s.key}">0</div>`;
+  calcRows.appendChild(row);
+  inputs[s.key] = {
+    d: row.querySelector('input[data-type="d"]'),
+    y: row.querySelector('input[data-type="y"]'),
+  };
+});
 
-// 5. DİNAMİK MOTİVASYON MESAJI (Günün saatine göre)
-const saatSimdi = new Date().getHours();
-const selamlama = document.getElementById("dynamic-greeting");
+const fmt = (n) => n.toLocaleString('tr-TR', { maximumFractionDigits: 2 });
 
-if (saatSimdi >= 5 && saatSimdi < 12) {
-    selamlama.innerText = "Günaydın! Erken kalkan yol alır, bugün harika bir çalışma günü olacak. ☕";
-} else if (saatSimdi >= 12 && saatSimdi < 18) {
-    selamlama.innerText = "İyi çalışmalar! Hedef P94, odaklanmaya devam. 🎯";
-} else {
-    selamlama.innerText = "İyi akşamlar! Gece sessizliği en iyi ders çalışma arkadaşıdır. 🌙";
+function recalc() {
+  let gy = 0, gk = 0;
+  SUBJECTS.forEach(s => {
+    const d = clamp(parseInt(inputs[s.key].d.value, 10) || 0, 0, s.total);
+    const y = clamp(parseInt(inputs[s.key].y.value, 10) || 0, 0, s.total - d);
+    const net = Math.max(0, d - y / 4);
+    $('net-' + s.key).textContent = fmt(net);
+    s.group === 'GY' ? (gy += net) : (gk += net);
+  });
+  const total = gy + gk;
+  $('resGY').textContent = fmt(gy);
+  $('resGK').textContent = fmt(gk);
+  $('resTotal').textContent = fmt(total);
+  const puan = total > 0 ? Math.min(99, 40 + 60 * Math.sqrt(total / 120)) : 0;
+  $('resScore').textContent = puan > 0
+    ? puan.toLocaleString('tr-TR', { minimumFractionDigits: 1, maximumFractionDigits: 1 })
+    : '–';
 }
+
+calcRows.addEventListener('input', recalc);
+$('calcReset').addEventListener('click', () => {
+  Object.values(inputs).forEach(({ d, y }) => { d.value = 0; y.value = 0; });
+  recalc();
+});
+recalc();
