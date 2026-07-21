@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="2026 KPSS Ortaöğretim (Lise) sınav rehberi, canlı geri sayım, konu dağılımları ve başvuru takvimi.">
+    <title>2026 KPSS Ortaöğretim | Hedef P94</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- Tema Değiştirme Butonu -->
+    <button id="theme-toggle" class="theme-btn" aria-label="Tema Değiştir">🌙</button>
+
+    <!-- KARŞILAMA VE GERİ SAYIM (HERO) -->
+    <header class="hero">
+        <div class="hero-content reveal">
+            <span class="badge">🎯 Hedef: Memurluk</span>
+            <h1>2026 KPSS <span class="gradient-text">Ortaöğretim</span></h1>
+            <p id="dynamic-greeting">Sınava hazırlık süreci devam ediyor. Pes etmek yok!</p>
+            
+            <div class="countdown-container">
+                <div class="time-card"><span id="gun">00</span><label>GÜN</label></div>
+                <div class="time-card"><span id="saat">00</span><label>SAAT</label></div>
+                <div class="time-card"><span id="dakika">00</span><label>DAKİKA</label></div>
+                <div class="time-card"><span id="saniye">00</span><label>SANİYE</label></div>
+            </div>
+
+            <div class="progress-wrapper">
+                <div class="progress-info">
+                    <span>Çalışma Kampı İlerlemesi (1 Temmuz - 25 Ekim)</span>
+                    <span id="progress-percent">%0</span>
+                </div>
+                <div class="progress-bar"><div id="progress-fill" class="progress-fill"></div></div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        
+        <!-- HIZLI BİLGİLER -->
+        <section class="quick-facts reveal">
+            <div class="fact-card">📝 <strong>120</strong> Soru</div>
+            <div class="fact-card">⏱️ <strong>130</strong> Dakika</div>
+            <div class="fact-card">🏆 Puan Türü: <strong>P94</strong></div>
+            <div class="fact-card">⚖️ 4 Yanlış = <strong>1 Doğru</strong></div>
+        </section>
+
+        <!-- ÖNEMLİ TARİHLER (ZAMAN ÇİZELGESİ) -->
+        <section class="section reveal">
+            <h2 class="section-title">📅 Kritik Takvim</h2>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="dot"></div>
+                    <div class="timeline-card">
+                        <span class="t-date">27 Ağustos - 8 Eylül 2026</span>
+                        <h3>Normal Başvurular</h3>
+                        <p>ÖSYM AİS üzerinden başvuruların yapılacağı ve sınav ücretinin yatırılacağı ana dönem.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="dot warning"></div>
+                    <div class="timeline-card">
+                        <span class="t-date">15 - 16 Eylül 2026</span>
+                        <h3>Geç Başvuru Günleri</h3>
+                        <p>Normal dönemi kaçıranlar için son şans! (Geç başvuruda sınav ücreti %50 artırımlı ödenir.)</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="dot danger"></div>
+                    <div class="timeline-card">
+                        <span class="t-date">25 Ekim 2026 Pazar - 10:15</span>
+                        <h3>BÜYÜK GÜN: SINAV!</h3>
+                        <p>Tek oturum halinde yapılacak. Saat 10:00'dan sonra sınav binalarına giriş kesinlikle yasak.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="dot success"></div>
+                    <div class="timeline-card">
+                        <span class="t-date">19 Kasım 2026</span>
+                        <h3>Sonuçların Açıklanması</h3>
+                        <p>Emeklerin karşılığını göreceğimiz gün. Puanlar 2 yıl (2028 KPSS'ye kadar) geçerli olacak.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SORU DAĞILIMLARI -->
+        <section class="section reveal">
+            <h2 class="section-title">📚 Sınavın Anatomisi (120 Soru)</h2>
+            <div class="subjects-grid">
+                
+                <div class="subject-card">
+                    <h3>🧠 Genel Yetenek <span>(60 Soru)</span></h3>
+                    <div class="stat-row">
+                        <span>Türkçe (30 Soru)</span>
+                        <div class="mini-bar"><div class="fill turkce" style="width: 50%"></div></div>
+                    </div>
+                    <div class="stat-row">
+                        <span>Matematik (30 Soru)</span>
+                        <div class="mini-bar"><div class="fill mat" style="width: 50%"></div></div>
+                    </div>
+                    <p class="subject-desc">Sözcükte anlam, paragraf, dil bilgisi; temel kavramlar, problemler ve sayısal mantık.</p>
+                </div>
+
+                <div class="subject-card">
+                    <h3>🌍 Genel Kültür <span>(60 Soru)</span></h3>
+                    <div class="stat-row">
+                        <span>Tarih (27 Soru)</span>
+                        <div class="mini-bar"><div class="fill tarih" style="width: 45%"></div></div>
+                    </div>
+                    <div class="stat-row">
+                        <span>Coğrafya (18 Soru)</span>
+                        <div class="mini-bar"><div class="fill cog" style="width: 30%"></div></div>
+                    </div>
+                    <div class="stat-row">
+                        <span>Vatandaşlık (9 Soru)</span>
+                        <div class="mini-bar"><div class="fill vat" style="width: 15%"></div></div>
+                    </div>
+                    <div class="stat-row">
+                        <span>Güncel Bilgiler (6 Soru)</span>
+                        <div class="mini-bar"><div class="fill gun" style="width: 10%"></div></div>
+                    </div>
+                    <p class="subject-desc">Türkiye coğrafyası, İnkılap tarihi, anayasa temelleri ve son 1 yılın önemli gelişmeleri.</p>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <p>⚠️ En güncel ve resmi bilgiler için her zaman <a href="https://www.osym.gov.tr" target="_blank">ÖSYM</a> duyurularını ve 2026 başvuru kılavuzunu esas alınız.</p>
+        <p>Bu site, KPSS'ye hazırlanan tüm adaylara motivasyon için tasarlandı. Başarılar! 🚀</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
