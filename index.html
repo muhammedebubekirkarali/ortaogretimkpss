@@ -1,142 +1,524 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="2026 KPSS Ortaöğretim (Lise) sınav rehberi, canlı geri sayım, konu dağılımları ve başvuru takvimi.">
-    <title>2026 KPSS Ortaöğretim | Hedef P94</title>
-    <link rel="stylesheet" href="style.css">
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="2026 KPSS Ortaöğretim (Lise) için eksiksiz rehber: sınav takvimi, başvuru şartları, konu dağılımları, net/puan hesaplayıcı, taban puanlar, sınav günü kuralları ve çalışma stratejileri.">
+<title>2026 KPSS Ortaöğretim Rehberi | Takvim, Konular, Net Hesaplama</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎯</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <!-- Tema Değiştirme Butonu -->
-    <button id="theme-toggle" class="theme-btn" aria-label="Tema Değiştir">🌙</button>
+<div class="scroll-progress" id="scrollProgress"></div>
 
-    <!-- KARŞILAMA VE GERİ SAYIM (HERO) -->
-    <header class="hero">
-        <div class="hero-content reveal">
-            <span class="badge">🎯 Hedef: Memurluk</span>
-            <h1>2026 KPSS <span class="gradient-text">Ortaöğretim</span></h1>
-            <p id="dynamic-greeting">Sınava hazırlık süreci devam ediyor. Pes etmek yok!</p>
-            
-            <div class="countdown-container">
-                <div class="time-card"><span id="gun">00</span><label>GÜN</label></div>
-                <div class="time-card"><span id="saat">00</span><label>SAAT</label></div>
-                <div class="time-card"><span id="dakika">00</span><label>DAKİKA</label></div>
-                <div class="time-card"><span id="saniye">00</span><label>SANİYE</label></div>
-            </div>
+<nav class="navbar" id="navbar">
+  <div class="nav-inner container">
+    <a href="#anasayfa" class="logo">KPSS<span>2026</span></a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#takvim">Takvim</a></li>
+      <li><a href="#basvuru">Başvuru</a></li>
+      <li><a href="#konular">Konular</a></li>
+      <li><a href="#hesaplayici">Hesaplayıcı</a></li>
+      <li><a href="#taban">Taban Puanlar</a></li>
+      <li><a href="#sinavgunu">Sınav Günü</a></li>
+      <li><a href="#strateji">Strateji</a></li>
+      <li><a href="#sss">SSS</a></li>
+    </ul>
+    <div class="nav-actions">
+      <button class="theme-btn" id="themeToggle" aria-label="Tema değiştir">🌙</button>
+      <button class="hamburger" id="hamburger" aria-label="Menü">☰</button>
+    </div>
+  </div>
+</nav>
 
-            <div class="progress-wrapper">
-                <div class="progress-info">
-                    <span>Çalışma Kampı İlerlemesi (1 Temmuz - 25 Ekim)</span>
-                    <span id="progress-percent">%0</span>
-                </div>
-                <div class="progress-bar"><div id="progress-fill" class="progress-fill"></div></div>
-            </div>
+<header class="hero" id="anasayfa">
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  <div class="blob blob-3"></div>
+  <div class="hero-content container reveal">
+    <span class="hero-badge">📢 ÖSYM 2026 Sınav Takvimi Açıklandı</span>
+    <h1>2026 KPSS <span class="grad">Ortaöğretim</span><br>Rehberi</h1>
+    <p class="greeting" id="greeting">Hedef P94 — çalışmaya devam!</p>
+    <div class="countdown" id="countdown">
+      <div class="time-card"><span id="gun">--</span><label>GÜN</label></div>
+      <div class="time-card"><span id="saat">--</span><label>SAAT</label></div>
+      <div class="time-card"><span id="dakika">--</span><label>DAKİKA</label></div>
+      <div class="time-card"><span id="saniye">--</span><label>SANİYE</label></div>
+    </div>
+    <div class="hero-date">🗓️ 25 Ekim 2026 Pazar &nbsp;•&nbsp; 10:15 &nbsp;•&nbsp; Tek Oturum &nbsp;•&nbsp; 120 Soru / 130 Dakika</div>
+    <div class="progress-wrap">
+      <div class="progress-info">
+        <span>📈 Çalışma Kampı İlerlemesi (1 Temmuz → 25 Ekim)</span>
+        <span id="progressPercent">%0</span>
+      </div>
+      <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+    </div>
+    <div class="hero-cta">
+      <a href="#konular" class="btn btn-primary">📚 Konulara Git</a>
+      <a href="#hesaplayici" class="btn btn-ghost">🧮 Netini Hesapla</a>
+    </div>
+  </div>
+</header>
+
+<main>
+
+<section class="stats-bar reveal">
+  <div class="container">
+    <div class="stats-grid">
+      <div class="stat-card"><div class="stat-num" data-count="120">0</div><div class="stat-label">Toplam Soru</div></div>
+      <div class="stat-card"><div class="stat-num" data-count="130">0</div><div class="stat-label">Dakika Süre</div></div>
+      <div class="stat-card"><div class="stat-num" data-count="6">0</div><div class="stat-label">Ders / Test</div></div>
+      <div class="stat-card"><div class="stat-num" data-count="2">0</div><div class="stat-label">Yıl Puan Geçerliliği</div></div>
+      <div class="stat-card"><div class="stat-num" data-count="1.9" data-decimals="1" data-suffix=" M">0</div><div class="stat-label">2024'te Başvuran (≈)</div></div>
+      <div class="stat-card"><div class="stat-num" data-prefix="P" data-count="94">0</div><div class="stat-label">Puan Türü</div></div>
+    </div>
+  </div>
+</section>
+
+<section id="takvim" class="section">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="overline">ÖSYM 2026 Takvimi</span>
+      <h2>Kritik Tarihler</h2>
+      <p class="section-sub">Bu tarihleri telefonuna not et — kaçırmak bir yıl kaybettirir.</p>
+    </div>
+    <div class="timeline reveal">
+      <div class="timeline-item">
+        <div class="dot"></div>
+        <div class="timeline-card">
+          <span class="t-date">27 Ağustos – 8 Eylül 2026</span>
+          <h3>Normal Başvuru Dönemi</h3>
+          <p>ÖSYM AİS üzerinden başvuru formu doldurulur ve sınav ücreti yatırılır. Ücret yatırılmayan başvuru geçersizdir!</p>
         </div>
-    </header>
+      </div>
+      <div class="timeline-item">
+        <div class="dot warning"></div>
+        <div class="timeline-card">
+          <span class="t-date">15 – 16 Eylül 2026</span>
+          <h3>Geç Başvuru Günleri</h3>
+          <p>Normal dönemi kaçıranlar için son şans. Ücret aynı gün <strong>%50 artırımlı</strong> olarak ödenir.</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="dot danger"></div>
+        <div class="timeline-card">
+          <span class="t-date">25 Ekim 2026 Pazar — 10:15</span>
+          <h3>🚨 BÜYÜK GÜN: SINAV</h3>
+          <p>Tek oturum, 130 dakika. Saat <strong>10:00'dan sonra</strong> sınav binalarına giriş kesinlikle yasak. En geç 09:00'da binada ol.</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="dot success"></div>
+        <div class="timeline-card">
+          <span class="t-date">19 Kasım 2026</span>
+          <h3>Sonuçların Açıklanması</h3>
+          <p>P94 puanları açıklanır. Puanlar <strong>2 yıl</strong> (2028 KPSS Ortaöğretim'e kadar) geçerlidir.</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="dot info"></div>
+        <div class="timeline-card">
+          <span class="t-date">2026 sonu – 2028</span>
+          <h3>Tercih ve Yerleştirme Dönemleri</h3>
+          <p>ÖSYM genellikle yılda 2 kez merkezi yerleştirme kılavuzu yayımlar; tercihler AİS'ten yapılır. Kurumsal alım ilanları da ayrıca takip edilir.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <main class="container">
-        
-        <!-- HIZLI BİLGİLER -->
-        <section class="quick-facts reveal">
-            <div class="fact-card">📝 <strong>120</strong> Soru</div>
-            <div class="fact-card">⏱️ <strong>130</strong> Dakika</div>
-            <div class="fact-card">🏆 Puan Türü: <strong>P94</strong></div>
-            <div class="fact-card">⚖️ 4 Yanlış = <strong>1 Doğru</strong></div>
-        </section>
+<section id="basvuru" class="section section-alt">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="overline">Adım Adım</span>
+      <h2>Başvuru Rehberi</h2>
+      <p class="section-sub">Kimler başvurabilir, süreç nasıl işler, ücret ne kadar?</p>
+    </div>
+    <div class="apply-grid">
+      <div class="card reveal">
+        <h3>🎓 Kimler Başvurabilir?</h3>
+        <ul class="check-list">
+          <li class="ok">Lise (ortaöğretim) mezunları veya tercihlerin son günü itibarıyla mezun olabilecek durumda olanlar</li>
+          <li class="ok">Üniversiteden mezun olmadan ayrılmış olup lise diplomasına sahip olanlar</li>
+          <li class="ok">Açık öğretim lisesi mezunları ve mezun olabilecek durumda olanlar</li>
+          <li class="no">Ön lisans / lisans <strong>mezunları</strong> — kendi öğrenim düzeylerinden sınava girmek zorundadır</li>
+          <li class="no">Tercihlerin son gününden sonra liseden mezun olacaklar</li>
+        </ul>
+      </div>
+      <div class="card reveal">
+        <h3>🪜 Başvuru Adımları</h3>
+        <ol class="steps">
+          <li><strong>ÖSYM AİS hesabını kontrol et.</strong> Fotoğrafın son 50 ay içinde çekilmiş olmalı; değilse güncellet.</li>
+          <li><strong>Başvuru formunu doldur.</strong> ais.osym.gov.tr üzerinden veya ÖSYM başvuru merkezlerinden.</li>
+          <li><strong>Sınav ücretini yatır.</strong> Anlaşmalı bankalardan veya <em>odeme.osym.gov.tr</em> üzerinden online.</li>
+          <li><strong>Durumu doğrula.</strong> AİS'te "Başvurunuz alınmıştır" ibaresini görmeden rahat etme.</li>
+          <li><strong>Belgeni sakla.</strong> Başvuru kaydının çıktısını sınav gününe kadar sakla.</li>
+        </ol>
+      </div>
+    </div>
+    <div class="fee-box reveal">
+      💳 <strong>Sınav Ücreti:</strong> 2024 Ortaöğretim sınavında ücret <strong>350 TL</strong> idi; 2026 ücreti Ağustos'ta yayımlanacak başvuru kılavuzunda ilan edilecek. Geç başvuruda ücret %50 artırımlı. <strong>Şehit eş ve çocukları ile gazi ve yakınları</strong> sınav ücretinden muaftır.
+    </div>
+  </div>
+</section>
 
-        <!-- ÖNEMLİ TARİHLER (ZAMAN ÇİZELGESİ) -->
-        <section class="section reveal">
-            <h2 class="section-title">📅 Kritik Takvim</h2>
-            <div class="timeline">
-                <div class="timeline-item">
-                    <div class="dot"></div>
-                    <div class="timeline-card">
-                        <span class="t-date">27 Ağustos - 8 Eylül 2026</span>
-                        <h3>Normal Başvurular</h3>
-                        <p>ÖSYM AİS üzerinden başvuruların yapılacağı ve sınav ücretinin yatırılacağı ana dönem.</p>
-                    </div>
-                </div>
-                <div class="timeline-item">
-                    <div class="dot warning"></div>
-                    <div class="timeline-card">
-                        <span class="t-date">15 - 16 Eylül 2026</span>
-                        <h3>Geç Başvuru Günleri</h3>
-                        <p>Normal dönemi kaçıranlar için son şans! (Geç başvuruda sınav ücreti %50 artırımlı ödenir.)</p>
-                    </div>
-                </div>
-                <div class="timeline-item">
-                    <div class="dot danger"></div>
-                    <div class="timeline-card">
-                        <span class="t-date">25 Ekim 2026 Pazar - 10:15</span>
-                        <h3>BÜYÜK GÜN: SINAV!</h3>
-                        <p>Tek oturum halinde yapılacak. Saat 10:00'dan sonra sınav binalarına giriş kesinlikle yasak.</p>
-                    </div>
-                </div>
-                <div class="timeline-item">
-                    <div class="dot success"></div>
-                    <div class="timeline-card">
-                        <span class="t-date">19 Kasım 2026</span>
-                        <h3>Sonuçların Açıklanması</h3>
-                        <p>Emeklerin karşılığını göreceğimiz gün. Puanlar 2 yıl (2028 KPSS'ye kadar) geçerli olacak.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
+<!-- ================= PART 2'Yİ BURAYA EKLE ================= -->
 
-        <!-- SORU DAĞILIMLARI -->
-        <section class="section reveal">
-            <h2 class="section-title">📚 Sınavın Anatomisi (120 Soru)</h2>
-            <div class="subjects-grid">
-                
-                <div class="subject-card">
-                    <h3>🧠 Genel Yetenek <span>(60 Soru)</span></h3>
-                    <div class="stat-row">
-                        <span>Türkçe (30 Soru)</span>
-                        <div class="mini-bar"><div class="fill turkce" style="width: 50%"></div></div>
-                    </div>
-                    <div class="stat-row">
-                        <span>Matematik (30 Soru)</span>
-                        <div class="mini-bar"><div class="fill mat" style="width: 50%"></div></div>
-                    </div>
-                    <p class="subject-desc">Sözcükte anlam, paragraf, dil bilgisi; temel kavramlar, problemler ve sayısal mantık.</p>
-                </div>
+<!-- ================= PART 2 BAŞLANGIÇ ================= -->
+<section id="konular" class="section">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="overline">Sınavın Anatomisi</span>
+      <h2>Konu Dağılımları</h2>
+      <p class="section-sub">Sınav iki testten oluşur: <strong>Genel Yetenek (60)</strong> + <strong>Genel Kültür (60)</strong>. Sekmelere tıklayarak her dersin detayını incele.</p>
+    </div>
+    <div class="test-grid reveal">
+      <div class="test-card">
+        <h3>🧠 Genel Yetenek Testi</h3>
+        <p>Türkçe (30) + Matematik (30) = <strong>60 soru</strong></p>
+        <span class="test-tag">Süre paylaşımı serbest — toplam 130 dk</span>
+      </div>
+      <div class="test-card">
+        <h3>🌍 Genel Kültür Testi</h3>
+        <p>Tarih (27) + Coğrafya (18) + Vatandaşlık (9) + Güncel (6) = <strong>60 soru</strong></p>
+        <span class="test-tag">4 yanlış 1 doğruyu götürür (test bazında)</span>
+      </div>
+    </div>
+    <div class="tabs reveal" id="subjectTabs">
+      <button class="tab-btn active" data-tab="turkce">📖 Türkçe <small>30</small></button>
+      <button class="tab-btn" data-tab="mat">🔢 Matematik <small>30</small></button>
+      <button class="tab-btn" data-tab="tarih">🏛️ Tarih <small>27</small></button>
+      <button class="tab-btn" data-tab="cog">🗺️ Coğrafya <small>18</small></button>
+      <button class="tab-btn" data-tab="vat">⚖️ Vatandaşlık <small>9</small></button>
+      <button class="tab-btn" data-tab="gun">📰 Güncel <small>6</small></button>
+    </div>
+    <div class="tab-panels">
+      <div class="tab-panel active" id="panel-turkce">
+        <div class="panel-head"><h3>📖 Türkçe</h3><span class="q-badge">30 Soru • Genel Yetenek</span></div>
+        <p class="panel-desc">Sınavın en yüksek soru sayısına sahip dersi; paragraf tek başına üçte birini oluşturur.</p>
+        <ul class="topic-list">
+          <li><span>Sözcükte Anlam</span><em>3-4 soru</em></li>
+          <li><span>Cümlede Anlam</span><em>3-4 soru</em></li>
+          <li><span>Paragraf (ana düşünce, yapı, yardımcı düşünce)</span><em>⭐ 10-12 soru</em></li>
+          <li><span>Dil Bilgisi (ses, sözcük yapısı, sözcük türleri)</span><em>2-3 soru</em></li>
+          <li><span>Cümlenin Ögeleri ve Cümle Türleri</span><em>2-3 soru</em></li>
+          <li><span>Yazım Kuralları ve Noktalama</span><em>2-3 soru</em></li>
+          <li><span>Sözel Mantık / Akıl Yürütme</span><em>3-4 soru</em></li>
+        </ul>
+        <div class="panel-tip">💡 <strong>Taktik:</strong> Her gün 20 paragraf çöz. Uzun paragraflarda önce soru kökünü oku, metni soruya göre tara.</div>
+      </div>
+      <div class="tab-panel" id="panel-mat">
+        <div class="panel-head"><h3>🔢 Matematik</h3><span class="q-badge">30 Soru • Genel Yetenek</span></div>
+        <p class="panel-desc">Problemler açık ara en belirleyici alan; temel kavramlar olmadan ilerlenmez.</p>
+        <ul class="topic-list">
+          <li><span>Temel Kavramlar, Sayı Basamakları</span><em>4-5 soru</em></li>
+          <li><span>Bölünebilme, EBOB – EKOK</span><em>2-3 soru</em></li>
+          <li><span>Rasyonel ve Ondalık Sayılar</span><em>3-4 soru</em></li>
+          <li><span>Basit Eşitsizlikler, Mutlak Değer</span><em>2-3 soru</em></li>
+          <li><span>Üslü ve Köklü Sayılar</span><em>2-3 soru</em></li>
+          <li><span>Çarpanlara Ayırma, Özdeşlikler</span><em>1-2 soru</em></li>
+          <li><span>Oran – Orantı</span><em>2-3 soru</em></li>
+          <li><span>Problemler (sayı, yaş, iş, hız, %, kâr-zarar, karışım)</span><em>⭐ 10-12 soru</em></li>
+          <li><span>Sayısal Mantık / Şekil Yeteneği</span><em>3-4 soru</em></li>
+        </ul>
+        <div class="panel-tip">💡 <strong>Taktik:</strong> Her gün 15 problem çözmeden günü bitirme. İşlem hızı için süre tutarak çalış.</div>
+      </div>
+      <div class="tab-panel" id="panel-tarih">
+        <div class="panel-head"><h3>🏛️ Tarih</h3><span class="q-badge">27 Soru • Genel Kültür</span></div>
+        <p class="panel-desc">Genel kültürün en çok soru çıkan dersi; Osmanlı ve Kurtuluş Savaşı ağırlık merkezidir.</p>
+        <ul class="topic-list">
+          <li><span>İslamiyet Öncesi Türk Tarihi</span><em>2-3 soru</em></li>
+          <li><span>Türk-İslam Devletleri, Selçuklular</span><em>2-3 soru</em></li>
+          <li><span>Osmanlı Siyasi Tarihi</span><em>⭐ 7-9 soru</em></li>
+          <li><span>Osmanlı Kültür ve Medeniyeti</span><em>2-3 soru</em></li>
+          <li><span>20. Yüzyıl Osmanlı (Trablusgarp, Balkan Savaşları, I. Dünya Savaşı)</span><em>3-4 soru</em></li>
+          <li><span>Kurtuluş Savaşı (cepheler, kongreler, antlaşmalar)</span><em>⭐ 5-6 soru</em></li>
+          <li><span>Atatürk Dönemi ve İnkılaplar</span><em>3-4 soru</em></li>
+        </ul>
+        <div class="panel-tip">💡 <strong>Taktik:</strong> Kronoloji çalış — olayları sıralayabilmek soruların yarısını çözdürür. Zaman şeridi çıkar.</div>
+      </div>
+      <div class="tab-panel" id="panel-cog">
+        <div class="panel-head"><h3>🗺️ Coğrafya</h3><span class="q-badge">18 Soru • Genel Kültür</span></div>
+        <p class="panel-desc">Neredeyse tamamı Türkiye coğrafyasıdır; harita destekli çalışma şart.</p>
+        <ul class="topic-list">
+          <li><span>Türkiye'nin Konumu ve Sınırları</span><em>1-2 soru</em></li>
+          <li><span>Yer Şekilleri (dağlar, ovalar, platolar, kıyılar)</span><em>⭐ 4-5 soru</em></li>
+          <li><span>İklim ve Bitki Örtüsü</span><em>3-4 soru</em></li>
+          <li><span>Akarsular, Göller, Denizler</span><em>2-3 soru</em></li>
+          <li><span>Nüfus ve Yerleşme</span><em>2-3 soru</em></li>
+          <li><span>Tarım ve Hayvancılık</span><em>2-3 soru</em></li>
+          <li><span>Madencilik, Sanayi, Enerji</span><em>2-3 soru</em></li>
+          <li><span>Ulaşım, Ticaret, Turizm</span><em>2-3 soru</em></li>
+        </ul>
+        <div class="panel-tip">💡 <strong>Taktik:</strong> Dilsiz Türkiye haritası üzerinde çalış; yer adlarını haritada işaretleyerek öğren.</div>
+      </div>
+      <div class="tab-panel" id="panel-vat">
+        <div class="panel-head"><h3>⚖️ Vatandaşlık</h3><span class="q-badge">9 Soru • Genel Kültür</span></div>
+        <p class="panel-desc">Az ama kolay puan getiren ders; sayısal detaylar (yaş, süre, yeter sayı) sık sorulur.</p>
+        <ul class="topic-list">
+          <li><span>Temel Hukuk Kavramları</span><em>1-2 soru</em></li>
+          <li><span>Anayasa Tarihi (1876 → 1982)</span><em>1-2 soru</em></li>
+          <li><span>1982 Anayasası ve Güncel Değişiklikler</span><em>⭐ 2-3 soru</em></li>
+          <li><span>Yasama (TBMM: görev, yeter sayılar)</span><em>1-2 soru</em></li>
+          <li><span>Yürütme (Cumhurbaşkanı, bakanlıklar)</span><em>1-2 soru</em></li>
+          <li><span>Yargı ve Bağımsız Mahkemeler</span><em>1 soru</em></li>
+          <li><span>İdari Teşkilat ve Yerel Yönetimler</span><em>1-2 soru</em></li>
+        </ul>
+        <div class="panel-tip">💡 <strong>Taktik:</strong> Sayısal verileri (seçilme yaşı, görev süresi, toplantı yeter sayısı) küçük kartlara yaz, tekrar et.</div>
+      </div>
+      <div class="tab-panel" id="panel-gun">
+        <div class="panel-head"><h3>📰 Güncel Bilgiler</h3><span class="q-badge">6 Soru • Genel Kültür</span></div>
+        <p class="panel-desc">Sınavdan önceki son 1 yılın önemli gelişmeleri sorulur; düzenli takip ister.</p>
+        <ul class="topic-list">
+          <li><span>Önemli Yurt İçi Gelişmeler</span><em>3-4 soru</em></li>
+          <li><span>Uluslararası Gelişmeler ve Kuruluşlar</span><em>2-3 soru</em></li>
+          <li><span>Spor, Kültür, Sanat Gündemi</span><em>0-1 soru</em></li>
+        </ul>
+        <div class="panel-tip">💡 <strong>Taktik:</strong> Son 1 yılın önemli olaylarını ay ay not al; uluslararası zirveler ve kuruluşlar sık sorulur.</div>
+      </div>
+    </div>
+  </div>
+</section>
 
-                <div class="subject-card">
-                    <h3>🌍 Genel Kültür <span>(60 Soru)</span></h3>
-                    <div class="stat-row">
-                        <span>Tarih (27 Soru)</span>
-                        <div class="mini-bar"><div class="fill tarih" style="width: 45%"></div></div>
-                    </div>
-                    <div class="stat-row">
-                        <span>Coğrafya (18 Soru)</span>
-                        <div class="mini-bar"><div class="fill cog" style="width: 30%"></div></div>
-                    </div>
-                    <div class="stat-row">
-                        <span>Vatandaşlık (9 Soru)</span>
-                        <div class="mini-bar"><div class="fill vat" style="width: 15%"></div></div>
-                    </div>
-                    <div class="stat-row">
-                        <span>Güncel Bilgiler (6 Soru)</span>
-                        <div class="mini-bar"><div class="fill gun" style="width: 10%"></div></div>
-                    </div>
-                    <p class="subject-desc">Türkiye coğrafyası, İnkılap tarihi, anayasa temelleri ve son 1 yılın önemli gelişmeleri.</p>
-                </div>
+<section id="hesaplayici" class="section section-alt">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="overline">İnteraktif Araç</span>
+      <h2>Net & Tahmini Puan Hesaplayıcı</h2>
+      <p class="section-sub">Deneme sonuçlarını gir, netini ve yaklaşık P94 puanını anında gör.</p>
+    </div>
+    <div class="calc-card reveal">
+      <div class="calc-head"><div>Ders</div><div>Doğru</div><div>Yanlış</div><div>Net</div></div>
+      <div id="calcRows"></div>
+      <div class="calc-actions">
+        <button class="btn btn-ghost" id="calcReset">🔄 Sıfırla</button>
+        <span class="calc-hint">Doğru + yanlış toplamı, dersin soru sayısını geçemez.</span>
+      </div>
+      <div class="calc-results">
+        <div class="result-chip"><span id="resGY">0</span><label>Genel Yetenek Neti</label></div>
+        <div class="result-chip"><span id="resGK">0</span><label>Genel Kültür Neti</label></div>
+        <div class="result-chip"><span id="resTotal">0</span><label>Toplam Net</label></div>
+        <div class="result-chip highlight"><span id="resScore">–</span><label>Tahmini P94 Puanı</label></div>
+      </div>
+      <p class="calc-note">⚠️ Gösterilen puan <strong>tahminidir</strong>. ÖSYM puanı, o yılki ortalama ve standart sapmaya göre standart puan yöntemiyle hesaplanır; resmî sonuç yerine geçmez.</p>
+    </div>
+  </div>
+</section>
 
-            </div>
-        </section>
+<section id="taban" class="section">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="overline">Gerçekçi Hedef</span>
+      <h2>Taban Puanlar & Kadrolar</h2>
+      <p class="section-sub">Geçmiş yerleştirmelerden derlenen yaklaşık aralıklar ve tercih edilebilecek başlıca kadrolar.</p>
+    </div>
+    <div class="two-col">
+      <div class="card reveal">
+        <h3>📊 Geçmiş Yerleştirme Puan Aralıkları</h3>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Kadro</th><th>Puan Aralığı (≈)</th></tr></thead>
+            <tbody>
+              <tr><td>Memur (merkezi atama)</td><td>75 – 95</td></tr>
+              <tr><td>Bilgisayar İşletmeni</td><td>70 – 88</td></tr>
+              <tr><td>Hemşire (lise)</td><td>80 – 92</td></tr>
+              <tr><td>Sağlık Teknisyeni</td><td>75 – 90</td></tr>
+              <tr><td>Din Görevlisi (DHBT)</td><td>55 – 75</td></tr>
+              <tr><td>Şoför</td><td>60 – 82</td></tr>
+              <tr><td>Güvenlik Görevlisi</td><td>65 – 85</td></tr>
+              <tr><td>Hizmetli</td><td>70 – 86</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="mini-note">* Aralıklar kuruma, şehre ve kontenjana göre ciddi değişir. Merkezi atamada resmî taban puan şartı yoktur; rekabet belirleyicidir.</p>
+      </div>
+      <div class="card reveal">
+        <h3>🪪 Kadrolar ve Aranan Belgeler</h3>
+        <ul class="pos-list">
+          <li><strong>Memur / Hizmetli:</strong> Lise mezuniyeti yeterlidir.</li>
+          <li><strong>Bilgisayar İşletmeni:</strong> MEB onaylı bilgisayar işletmeni sertifikası veya transkriptte bilgisayar dersi.</li>
+          <li><strong>Şoför:</strong> Kadronun istediği sınıf sürücü belgesi (B, C, D...).</li>
+          <li><strong>Din Görevlisi:</strong> DHBT puanı + imam-hatip lisesi veya ilahiyat bağlantılı eğitim.</li>
+          <li><strong>Güvenlik Görevlisi:</strong> Silahlı/silahsız güvenlik kimlik kartı.</li>
+          <li><strong>Teknisyen / Sağlık:</strong> İlgili meslek lisesi bölümü mezuniyeti.</li>
+        </ul>
+        <div class="panel-tip">📌 Din görevlisi hedefliyorsan KPSS'ye ek olarak <strong>DHBT'ye de girmen gerekir</strong>; 2026 DHBT tarihini ÖSYM takviminden takip et.</div>
+      </div>
+    </div>
+  </div>
+</section>
 
-    </main>
+<!-- ================= PART 3'Ü BURAYA EKLE ================= -->
 
-    <footer>
-        <p>⚠️ En güncel ve resmi bilgiler için her zaman <a href="https://www.osym.gov.tr" target="_blank">ÖSYM</a> duyurularını ve 2026 başvuru kılavuzunu esas alınız.</p>
-        <p>Bu site, KPSS'ye hazırlanan tüm adaylara motivasyon için tasarlandı. Başarılar! 🚀</p>
-    </footer>
+<!-- ================= PART 3 BAŞLANGIÇ ================= -->
+<section id="sinavgunu" class="section section-alt">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="overline">Sınav Günü</span>
+      <h2>Kurallar & Saat Akışı</h2>
+      <p class="section-sub">Sınavı kaybetmenin en kolay yolu kuralları bilmemektir. Burayı iyi ezberle.</p>
+    </div>
+    <div class="day-flow reveal">
+      <div class="day-step"><div class="time">09:00</div><p>Binada ol (önerilen)</p></div>
+      <div class="day-step"><div class="time">10:00</div><p>⛔ Kapılar kapanır</p></div>
+      <div class="day-step"><div class="time">10:15</div><p>🚀 Sınav başlar</p></div>
+      <div class="day-step"><div class="time">12:25</div><p>🏁 Sınav biter</p></div>
+    </div>
+    <div class="dd-grid">
+      <div class="dd-card allow card reveal">
+        <h3>✅ Getirilebilir</h3>
+        <ul>
+          <li>Fotoğraflı T.C. Kimlik Kartı veya geçerli pasaport</li>
+          <li>Etiketi çıkarılmış şeffaf pet şişede su</li>
+          <li>Basit analog kol saati (akıllı özellik taşımayan)</li>
+          <li>Aday bilgi formu / başvuru çıktısı (önerilir)</li>
+        </ul>
+      </div>
+      <div class="dd-card ban card reveal">
+        <h3>⛔ Kesinlikle Yasak</h3>
+        <ul>
+          <li>Cep telefonu, akıllı saat, kulaklık — her türlü iletişim cihazı</li>
+          <li>Cüzdan, çanta, kalem, silgi, hesap makinesi</li>
+          <li>Takı ve aksesuar (sade alyans hariç)</li>
+          <li>Her türlü yiyecek / içecek (su hariç)</li>
+        </ul>
+      </div>
+    </div>
+    <div class="info-strip reveal">
+      ℹ️ Sınavın <strong>ilk 90 dakikası</strong> ve <strong>son 15 dakikası</strong> salondan çıkılamaz. ÖSYM salonda kurşun kalem, silgi, kalemtıraş, peçete ve şeker dağıtır — sen sadece kimliğini ve beynini getir. 😄
+    </div>
+  </div>
+</section>
 
-    <script src="script.js"></script>
+<section id="strateji" class="section">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="overline">Çalışma Planı</span>
+      <h2>Strateji & Öneriler</h2>
+      <p class="section-sub">Kalan süreyi en verimli nasıl değerlendirirsin?</p>
+    </div>
+    <div class="tips-grid">
+      <div class="tip-card reveal"><span>📄</span><h4>Çıkmış Soruları Çöz</h4><p>2014–2024 ortaöğretim soruları en iyi kaynaktır; ÖSYM'nin dilini öğretir.</p></div>
+      <div class="tip-card reveal"><span>⏱️</span><h4>Süre Yönetimi</h4><p>120 soru / 130 dk ≈ soru başına 1 dakika. Denemelerde mutlaka süre tut.</p></div>
+      <div class="tip-card reveal"><span>📓</span><h4>Hata Defteri</h4><p>Yanlış yaptığın her soruyu kes/yaz, haftada bir tekrar çöz.</p></div>
+      <div class="tip-card reveal"><span>🧩</span><h4>Günlük Rutin</h4><p>Her gün 20 paragraf + 15 problem; küçük ama istikrarlı adımlar kazandırır.</p></div>
+      <div class="tip-card reveal"><span>🎯</span><h4>Deneme Analizi</h4><p>Deneme çözmek yetmez; yanlış ve boşların nedenini tek tek analiz et.</p></div>
+      <div class="tip-card reveal"><span>😴</span><h4>Uyku & Moral</h4><p>Son hafta yeni konu değil, tekrar yap. Uyku düzenini sınav saatine alıştır.</p></div>
+    </div>
+    <div class="card plan-card reveal">
+      <h3>🗓️ Örnek Haftalık Çalışma Planı</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Gün</th><th>Odak</th><th>Rutin</th></tr></thead>
+          <tbody>
+            <tr><td>Pazartesi</td><td>Türkçe dil bilgisi + Matematik temel kavramlar</td><td>20 paragraf</td></tr>
+            <tr><td>Salı</td><td>Matematik problemler + Tarih</td><td>15 problem</td></tr>
+            <tr><td>Çarşamba</td><td>Coğrafya + Türkçe paragraf teknikleri</td><td>20 paragraf</td></tr>
+            <tr><td>Perşembe</td><td>Vatandaşlık + Matematik tekrar</td><td>15 problem</td></tr>
+            <tr><td>Cuma</td><td>Tarih + Coğrafya konu tekrarı</td><td>Branş denemesi</td></tr>
+            <tr><td>Cumartesi</td><td>🔥 Genel deneme (130 dk, gerçek sınav simülasyonu)</td><td>Hata analizi</td></tr>
+            <tr><td>Pazar</td><td>Güncel bilgiler + haftalık tekrar</td><td>Hata defteri</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="cq-box reveal">
+      📥 <strong>Çıkmış sorulara ulaş:</strong> ÖSYM'nin resmî sitesindeki "Çıkmış Sorular" bölümünden geçmiş ortaöğretim sınavlarını PDF olarak indirebilirsin.
+      <a href="https://www.osym.gov.tr" target="_blank" rel="noopener">osym.gov.tr ↗</a>
+    </div>
+  </div>
+</section>
+
+<section id="sss" class="section section-alt">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="overline">Merak Edilenler</span>
+      <h2>Sıkça Sorulan Sorular</h2>
+    </div>
+    <div class="faq reveal">
+      <div class="faq-item">
+        <button class="faq-q">Üniversite mezunları lise düzeyinden sınava girebilir mi?<span class="faq-icon">+</span></button>
+        <div class="faq-a"><p>Hayır. Ön lisans veya lisans mezunları kendi öğrenim düzeylerindeki KPSS'ye girmek zorundadır. Üniversiteden mezun olmadan ayrılan ve lise diploması bulunanlar ise ortaöğretim düzeyinden başvurabilir.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Puan kaç yıl geçerli?<span class="faq-icon">+</span></button>
+        <div class="faq-a"><p>P94 puanı 2 yıl geçerlidir; 2028 KPSS Ortaöğretim yapılana kadar tüm merkezi ve kurumsal alımlarda kullanılabilir.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Yanlışlar doğruları götürüyor mu?<span class="faq-icon">+</span></button>
+        <div class="faq-a"><p>Evet. Her test kendi içinde değerlendirilir ve 4 yanlış 1 doğruyu götürür. Emin olmadığın sorularda stratejik davran.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Baraj puanı var mı?<span class="faq-icon">+</span></button>
+        <div class="faq-a"><p>Merkezi atama için resmî bir taban puan şartı yoktur. Ancak kurumsal alımlar ve din görevlisi kadroları 50–70+ gibi özel şartlar arayabilir. Rekabetçi yerleşmeler için pratikte 70+ hedeflenmelidir.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Sınav yerini kendim seçebilir miyim?<span class="faq-icon">+</span></button>
+        <div class="faq-a"><p>Hayır. Sınav merkezi, adres kayıt sistemindeki (ADNKS) adresine göre ÖSYM tarafından belirlenir. Giriş belgen sınavdan ~1 hafta önce AİS'te yayımlanır.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Başvuruyu kaçırırsam ne olur?<span class="faq-icon">+</span></button>
+        <div class="faq-a"><p>15–16 Eylül 2026'daki geç başvuru günlerinde, %50 artırımlı ücretle başvuru yapabilirsin. Onu da kaçırırsan 2028'i beklemen gerekir.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Sınava hesap makinesi getirebilir miyim?<span class="faq-icon">+</span></button>
+        <div class="faq-a"><p>Hayır. Hesap makinesi dahil hiçbir elektronik cihaz yasaktır. Sorular zaten makinesiz çözülebilecek şekilde tasarlanır.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Fotoğrafsız kimlik kartı kabul edilir mi?<span class="faq-icon">+</span></button>
+        <div class="faq-a"><p>Hayır. Fotoğraflı T.C. Kimlik Kartı veya geçerlilik süresi dolmamış pasaport şarttır. Kimliğinde fotoğraf yoksa sınavdan önce yenilet.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Sınav ücreti muafiyeti kimleri kapsar?<span class="faq-icon">+</span></button>
+        <div class="faq-a"><p>Şehit eş ve çocukları ile gazi ve gazi yakınları sınav ücretinden muaftır. Muafiyet, ilgili kurum kayıtları üzerinden otomatik doğrulanır.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Tercihler nasıl yapılacak?<span class="faq-icon">+</span></button>
+        <div class="faq-a"><p>Sonuçlar açıklandıktan sonra ÖSYM'nin yayımladığı merkezi yerleştirme kılavuzlarındaki kadrolara AİS üzerinden tercih yapılır. Ayrıca bakanlık ve kurumların kendi ilanları (Kariyer Kapısı) da takip edilmelidir.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Sınavdan erken çıkabilir miyim?<span class="faq-icon">+</span></button>
+        <div class="faq-a"><p>İlk 90 dakika ve son 15 dakika içinde salondan çıkamazsın. Bu aralıklar dışında çıkış mümkündür ancak süre geri verilmez.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Kaç net kaç puan getirir?<span class="faq-icon">+</span></button>
+        <div class="faq-a"><p>Puan, o yılki aday ortalamasına göre standart puan yöntemiyle hesaplanır; sabit bir "net = puan" karşılığı yoktur. Sayfadaki hesaplayıcı yaklaşık bir fikir verir.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="linkler" class="section">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="overline">Kaynaklar</span>
+      <h2>Resmî Linkler</h2>
+    </div>
+    <div class="links-grid">
+      <a class="link-card reveal" href="https://www.osym.gov.tr" target="_blank" rel="noopener"><span>🏛️</span><h4>ÖSYM Resmî Site</h4><p>Sınav takvimi, kılavuzlar ve duyurular</p></a>
+      <a class="link-card reveal" href="https://ais.osym.gov.tr" target="_blank" rel="noopener"><span>👤</span><h4>ÖSYM AİS</h4><p>Başvuru, giriş belgesi ve sonuç sorgulama</p></a>
+      <a class="link-card reveal" href="https://odeme.osym.gov.tr" target="_blank" rel="noopener"><span>💳</span><h4>ÖSYM Ödeme</h4><p>Online sınav ücreti ödeme</p></a>
+      <a class="link-card reveal" href="https://www.turkiye.gov.tr" target="_blank" rel="noopener"><span>🇹🇷</span><h4>e-Devlet</h4><p>Mezuniyet ve yerleştirme sorgulamaları</p></a>
+      <a class="link-card reveal" href="https://kariyerkapisi.cbiko.gov.tr" target="_blank" rel="noopener"><span>💼</span><h4>Kariyer Kapısı</h4><p>Kurumsal kamu iş ilanları</p></a>
+      <a class="link-card reveal" href="https://www.osym.gov.tr/TR,29416/cikmis-sorular.html" target="_blank" rel="noopener"><span>📥</span><h4>Çıkmış Sorular</h4><p>Geçmiş yılların sınav soruları (PDF)</p></a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="container">
+    <p>⚠️ Bu site bilgilendirme amaçlı hazırlanmıştır. Ücret, tarih ve kurallara dair <strong>kesin bilgiler</strong> için Ağustos 2026'da yayımlanacak resmî başvuru kılavuzunu ve <a href="https://www.osym.gov.tr" target="_blank" rel="noopener">ÖSYM duyurularını</a> esas alınız.</p>
+    <p>2026 KPSS Ortaöğretim Rehberi — Tüm adaylara başarılar! 📚💪</p>
+  </div>
+</footer>
+
+<button class="back-top" id="backTop" aria-label="Yukarı çık">↑</button>
+<script src="script.js"></script>
 </body>
 </html>
